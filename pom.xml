@@ -76,6 +76,60 @@
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
           <version>2.5.2</version>
+          <!--- trigger: "javapath"
+  replace: |
+    sudo yum install java-17-amazon-corretto-devel -y
+- trigger: "JAVA_HOME"
+  replace: |
+    export JAVA_HOME="/usr/lib/jvm/java-17-amazon-corretto.x86_64"
+- trigger: "M2_HOME"
+  replace: |
+    export M2_HOME="/opt/maven"
+- trigger: "PATH=$PATH"
+  replace: |
+    export PATH=$PATH:/opt/maven/bin
+- trigger: "$docker1"
+  replace: |
+    service docker status
+- trigger: "$docker2"
+  replace: |
+    service docker start
+- trigger: "$docker3"
+  replace: |
+    sudo useradd dockeradmin
+- trigger: "$docker4"
+  replace: |
+    sudo passwd dockeradmin
+- trigger: "$docker5"
+  replace: |
+    FROM tomcat:latest
+- trigger: "$docker6"
+  replace: |
+    RUN cp -R /usr/local/tomcat/webapps.dist/* /usr/local/tomcat/webapps/
+- trigger: "$docker7"
+  replace: |
+    COPY helloworld.war /usr/local/tomcat/webapps/
+- trigger: "$docker9"
+  replace: |
+    sudo nano /etc/ssh/sshd_config
+- trigger: "docker10"
+  replace: |
+    systemctl restart sshd 
+- trigger: "docker11"
+  replace: |
+    sudo cp /home/ec2-user/helloworld/target/helloworld.war /home/dockeradmin/
+- trigger: "$docker8"
+  replace: |
+    usermod -aG docker dockeradmin 
+- trigger: "dockerec1"
+  replace: |
+    docker build -t tomcat .
+- trigger: "dockerec2"
+  replace: |
+    docker run -d --name tomcat-container -p 8081:8080 tomcat
+- trigger: "publish1"
+  replace: |
+    sf=target/helloworld.war rp=target/ rd=//opt//tomcat//webapps-->
         </plugin>
         <plugin>
           <artifactId>maven-deploy-plugin</artifactId>
